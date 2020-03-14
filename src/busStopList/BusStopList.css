@@ -1,0 +1,18 @@
+.bus-stop-list {
+    position: absolute;
+    z-index: 1;
+}
+
+.bus-stop-list.transparent-list {
+    opacity: 0.1;
+}
+
+.bus-stop-list .panel {
+    border: 1px solid #ddd;
+    background-color: #fcfcfc;
+}
+
+.bus-stop-list .table-filter {
+    background-color: #fff;
+    border-bottom: 1px solid #eee;
+}
