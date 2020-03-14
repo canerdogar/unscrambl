@@ -5,6 +5,7 @@ import "./PaymentForm.css";
 import {BusStop} from "../entityStore/BusStopService";
 import {faArrowLeft} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import _ from "lodash";
 
 interface PaymentFormProps {
     busStop: BusStop;
@@ -62,6 +63,7 @@ export class PaymentForm extends React.Component<PaymentFormProps, PaymentFormSt
     }
 
     render() {
+        const year: number = new Date().getFullYear() % 2000;
         return (
             <Col xs={12} md={4} className="payment-form">
                 <div
@@ -95,24 +97,18 @@ export class PaymentForm extends React.Component<PaymentFormProps, PaymentFormSt
                                 <Form.Label>Expiry Date</Form.Label>
                                 <Row>
                                     <Col xs={6} lg={6}>
-                                        <Form.Control
-                                            type="number"
-                                            placeholder="MM"
-                                            minLength={2}
-                                            maxLength={2}
-                                            min={1}
-                                            max={12}
-                                        />
+                                        <Form.Control as="select">
+                                            {_.range(1,13).map((option: number) =>
+                                                <option>{option}</option>
+                                            )}
+                                        </Form.Control>
                                     </Col>
                                     <Col xs={6} lg={6}>
-                                        <Form.Control
-                                            type="number"
-                                            placeholder="YY"
-                                            minLength={2}
-                                            maxLength={2}
-                                            min={20}
-                                            max={99}
-                                        />
+                                        <Form.Control as="select">
+                                            {_.range(year,year + 11).map((option: number) =>
+                                                <option>{option}</option>
+                                            )}
+                                        </Form.Control>
                                     </Col>
                                 </Row>
                             </Col>
@@ -128,6 +124,10 @@ export class PaymentForm extends React.Component<PaymentFormProps, PaymentFormSt
                                 />
                             </Col>
                         </Form.Row>
+                    </Form.Group>
+                    <Form.Group controlId="formBasicFullname">
+                        <Form.Label>Email address</Form.Label>
+                        <Form.Control type="email" placeholder="Enter your email (Optional)" />
                     </Form.Group>
                     <Button variant="primary" type="submit" size="lg" block>
                         Pay
