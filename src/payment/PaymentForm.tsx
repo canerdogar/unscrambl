@@ -49,18 +49,6 @@ export class PaymentForm extends React.Component<PaymentFormProps, PaymentFormSt
     private creditCardListener = (event: any): void => {
         let field: HTMLInputElement = event.target as HTMLInputElement;
 
-        let selectionIndex: number = 0;
-
-        let onlyNumsNow: string[] = this.strip(field.value);
-        let onlyNumsBefore: string[] = this.strip(this.oldCardNumberValue);
-
-        if (onlyNumsNow.length === 0) {
-            selectionIndex = 0;
-        } else if (onlyNumsBefore.length === 0) {
-
-        }
-
-
         let maskedInput: string = this.reapplyMask(field.value);
         let i;
         for (i = maskedInput.length - 1; i >= 0; i--) {
