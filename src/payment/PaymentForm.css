@@ -7,3 +7,17 @@
 .payment-form .back-button {
     cursor: pointer;
 }
+
+.credit-card {
+    width: 50px;
+    height: 50px;
+    background-size: contain !important;
+}
+
+.mastercard {
+    background: no-repeat center url(./cardLogos/mastercard.png);
+}
+
+.visa {
+    background: no-repeat center url(./cardLogos/visa.png);
+}

@@ -21,40 +21,51 @@ enum PanelType {
 
 class App extends React.Component<AppProps, AppState> {
 
-  constructor(props: AppProps) {
-    super(props);
-    this.state = {
-        openedPanel: null,
-        busStop: {} as BusStop,
-    };
-  }
+    private busStopList: BusStopList | null;
 
-  private showPaymentForm = (busStop: BusStop) => {
-    this.setState({
-        openedPanel: PanelType.PAYMENT,
-        busStop
-    })
-  }
+    constructor(props: AppProps) {
+        super(props);
+        this.state = {
+            openedPanel: null,
+            busStop: {} as BusStop,
+        };
+    }
 
-  private showMap = (busStop: BusStop) => {
-      this.setState({
+    private showPaymentForm = (busStop: BusStop) => {
+        this.setState({
+            openedPanel: PanelType.PAYMENT,
+            busStop
+        })
+    }
+
+    private showMap = (busStop: BusStop) => {
+        this.setState({
           openedPanel: PanelType.MAP,
           busStop
-      })
-  }
+        })
+    }
 
-  private closePanel = () => {
-      this.setState({
+    private closePanel = () => {
+        this.setState({
           openedPanel: null,
           busStop: {} as BusStop,
-      })
-  }
+        })
+    }
 
-  render() {
+    private closeAndRefresh = () => {
+        this.setState({
+          openedPanel: null,
+        }, () => {
+            this.busStopList && this.busStopList.refresh();
+        });
+    }
+
+    render() {
       return (
           <Container fluid className="d-flex h-100 flex-column">
               <Row className="flex-fill d-flex justify-content-center align-items-center">
                   <BusStopList
+                      ref={(busStopListRef) => this.busStopList = busStopListRef}
                       onMapClick={this.showMap}
                       onDonationClick={this.showPaymentForm}
                       transparent={this.state.openedPanel !== null}
@@ -63,6 +74,7 @@ class App extends React.Component<AppProps, AppState> {
                     <PaymentForm
                         busStop={this.state.busStop}
                         closePanel={this.closePanel}
+                        closeAndRefresh={this.closeAndRefresh}
                     />
                   }
                   {this.state.openedPanel === PanelType.MAP &&
@@ -74,7 +86,7 @@ class App extends React.Component<AppProps, AppState> {
               </Row>
           </Container>
       );
-  }
+    }
 
 }
 

@@ -1,6 +1,6 @@
 import * as React from "react";
 import {BusStop} from "../entityStore/BusStopService";
-import {Badge, OverlayTrigger} from "react-bootstrap";
+import {Badge, Overlay, OverlayTrigger, Tooltip} from "react-bootstrap";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faDonate, faLocationArrow } from '@fortawesome/free-solid-svg-icons';
 import "./BusStopListRow.css";
@@ -43,30 +43,17 @@ export class BusStopListRow extends React.Component<BusStopListRowProps, BusStop
                         </p>
                 </td>
                 <td>
-                    <OverlayTrigger
-                        trigger="hover"
-                        overlay={
-                            <span className="bus-stop-icon-tooltip">Make donation</span>
-                        }
-                    >
-                        <FontAwesomeIcon
-                            icon={faDonate}
-                            className="busStopListRowIcons m-1"
-                            onClick={() => onDonationClick(busStop)}
-                        />
-                    </OverlayTrigger>
-                    <OverlayTrigger
-                        trigger="hover"
-                        overlay={
-                            <span className="bus-stop-icon-tooltip">Show on map</span>
-                        }
-                    >
-                        <FontAwesomeIcon
-                            icon={faLocationArrow}
-                            className="busStopListRowIcons m-1"
-                            onClick={() =>onMapClick(busStop)}
-                        />
-                    </OverlayTrigger>
+                    <FontAwesomeIcon
+                        icon={faDonate}
+                        className="busStopListRowIcons m-1"
+                        onClick={() => onDonationClick(busStop)}
+                    />
+
+                    <FontAwesomeIcon
+                        icon={faLocationArrow}
+                        className="busStopListRowIcons m-1"
+                        onClick={() =>onMapClick(busStop)}
+                    />
                 </td>
             </tr>
         );

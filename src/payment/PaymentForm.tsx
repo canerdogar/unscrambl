@@ -1,19 +1,23 @@
 import * as React from 'react';
-import {Button, Col, Form, Row} from "react-bootstrap";
+import { Button, Col, Form, Row} from "react-bootstrap";
 import {CCValidationEnum, CreditCardType, checkCreditCard} from "./CreditCardValidator";
 import "./PaymentForm.css";
-import {BusStop} from "../entityStore/BusStopService";
+import {BusStop, busStopService} from "../entityStore/BusStopService";
 import {faArrowLeft} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import _ from "lodash";
+import {InformationModal} from "./InformationModal";
 
 interface PaymentFormProps {
     busStop: BusStop;
     closePanel: () => void;
+    closeAndRefresh: () => void;
 }
 
 interface PaymentFormState {
-
+    validated: boolean;
+    show: boolean;
+    errorMessage: string | null;
 }
 
 export class PaymentForm extends React.Component<PaymentFormProps, PaymentFormState> {
@@ -23,7 +27,11 @@ export class PaymentForm extends React.Component<PaymentFormProps, PaymentFormSt
 
     constructor(props: PaymentFormProps) {
         super(props);
-
+        this.state = {
+            validated: false,
+            show: false,
+            errorMessage: null,
+        };
     }
 
     // Strip everything which are not numbers
@@ -62,6 +70,49 @@ export class PaymentForm extends React.Component<PaymentFormProps, PaymentFormSt
         field.setSelectionRange(i+1, i+1);
     }
 
+    private onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+        const form: HTMLFormElement = event.currentTarget;
+        event.preventDefault();
+        event.stopPropagation();
+
+        let creditCardElement: HTMLInputElement = (form.elements[2] as HTMLInputElement);
+        let creditCardNumber: string = creditCardElement.value as string;
+        let isCreditCardValid: CCValidationEnum = checkCreditCard(creditCardNumber, CreditCardType.MASTERCARD) ||
+            checkCreditCard(creditCardNumber, CreditCardType.VISA);
+
+        if (isCreditCardValid === CCValidationEnum.VALID) {
+            try {
+                let donation: number = parseInt((form.elements[1] as HTMLInputElement).value);
+                busStopService.addDonation(this.props.busStop.stopId, donation);
+                this.setState({
+                    show: true,
+                    errorMessage: null,
+                }, () => {
+                    setTimeout(() => this.setState({
+                        show: false,
+                    }, () => this.props.closeAndRefresh()), 3000);
+                })
+            } catch (e) {
+                this.setState({
+                    show: true,
+                    errorMessage: "Transaction couldn't succeeded! Try Again",
+                })
+            }
+        } else {
+            this.setState({
+                show: true,
+                errorMessage: "Invalid Card Number",
+            })
+        }
+    }
+
+    private closeInformationModel = () => {
+        this.setState({
+            show: false,
+            errorMessage: null,
+        });
+    }
+
     render() {
         const year: number = new Date().getFullYear() % 2000;
         return (
@@ -75,10 +126,18 @@ export class PaymentForm extends React.Component<PaymentFormProps, PaymentFormSt
                         />
                         <span>Go Back</span>
                     </div>
-                    <Form>
+                    <Form onSubmit={this.onSubmit}>
                         <Form.Group controlId="formBasicFullname">
                             <Form.Label>Name of the donator</Form.Label>
                             <Form.Control type="text" placeholder="Enter your full name" required/>
+                        </Form.Group>
+                        <Form.Group controlId="formBasicAmount">
+                            <Form.Label>Amount of donation</Form.Label>
+                            <Form.Control
+                                type="number"
+                                placeholder="Amount of donation you wish to have"
+                                required
+                            />
                         </Form.Group>
                         <Form.Group controlId="formBasicCardNumber">
                             <Form.Label>Credit Card Number</Form.Label>
@@ -98,14 +157,14 @@ export class PaymentForm extends React.Component<PaymentFormProps, PaymentFormSt
                                         <Col xs={6} lg={6}>
                                             <Form.Control as="select">
                                                 {_.range(1,13).map((option: number) =>
-                                                    <option>{option}</option>
+                                                    <option key={option}>{option}</option>
                                                 )}
                                             </Form.Control>
                                         </Col>
                                         <Col xs={6} lg={6}>
                                             <Form.Control as="select">
                                                 {_.range(year,year + 11).map((option: number) =>
-                                                    <option>{option}</option>
+                                                    <option key={option}>{option}</option>
                                                 )}
                                             </Form.Control>
                                         </Col>
@@ -125,7 +184,11 @@ export class PaymentForm extends React.Component<PaymentFormProps, PaymentFormSt
                                 </Col>
                             </Form.Row>
                         </Form.Group>
-                        <Form.Group controlId="formBasicFullname">
+                        <div className="d-flex flex-row justify-content-end">
+                            <div className="credit-card mastercard mr-2"/>
+                            <div className="credit-card visa"/>
+                        </div>
+                        <Form.Group controlId="formBasicEmail">
                             <Form.Label>Email address</Form.Label>
                             <Form.Control type="email" placeholder="Enter your email (Optional)" />
                         </Form.Group>
@@ -134,6 +197,11 @@ export class PaymentForm extends React.Component<PaymentFormProps, PaymentFormSt
                         </Button>
                     </Form>
                 </div>
+                <InformationModal
+                    show={this.state.show}
+                    close={this.closeInformationModel}
+                    errorMessage={this.state.errorMessage}
+                />
             </Col>
         );
     }

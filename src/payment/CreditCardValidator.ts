@@ -26,7 +26,6 @@ const creditCards: CreditCard[] = [
 ];
 
 export enum CCValidationEnum {
-    UNKNOWN = "Unknown card type",
     NO_INPUT = "No card number provided",
     INVALID_FORMAT = "Credit card number is in invalid format",
     INVALID = "Credit card number is invalid",
@@ -38,7 +37,7 @@ export enum CCValidationEnum {
 export const checkCreditCard = (cardnumber: string, creditCardType: CreditCardType): CCValidationEnum => {
 
     // Ensure that the user has provided a credit card number
-    if (cardnumber.length == 0)  {
+    if (cardnumber.length === 0)  {
         return CCValidationEnum.NO_INPUT;
     }
 
@@ -55,7 +54,6 @@ export const checkCreditCard = (cardnumber: string, creditCardType: CreditCardTy
     // Now check the modulus 10 check digit
 
     let checksum = 0;                                  // running checksum total
-    let mychar = "";                                   // next char to process
     let j = 1;                                         // takes value of 1 or 2
 
     // Process each digit one by one starting at the right
@@ -75,17 +73,17 @@ export const checkCreditCard = (cardnumber: string, creditCardType: CreditCardTy
         checksum = checksum + calc;
 
         // Switch the value of j
-        if (j ==1) {j = 2} else {j = 1};
+        if (j === 1) {j = 2} else {j = 1};
     }
 
     // All done - if checksum is divisible by 10, it is a valid modulus 10.
     // If not, report an error.
-    if (checksum % 10 != 0)  {
+    if (checksum % 10 !== 0)  {
         return CCValidationEnum.INVALID;
     }
 
     // Check it's not a spam number
-    if (cardNo == '5490997771092064') {
+    if (cardNo === '5490997771092064') {
         return CCValidationEnum.SCAM_ATTEMPT
     }
 
@@ -94,8 +92,8 @@ export const checkCreditCard = (cardnumber: string, creditCardType: CreditCardTy
     let PrefixValid = false;
 
     // We use these for holding the valid lengths and prefixes of a card type
-    let prefix = new Array ();
-    let lengths = new Array ();
+    let prefix = [];
+    let lengths = [];
 
     // Load an array with the valid prefixes for this card
     prefix = (creditCards[creditCardType]).prefixes.split(",");
@@ -114,7 +112,7 @@ export const checkCreditCard = (cardnumber: string, creditCardType: CreditCardTy
     // See if the length is valid for this card
     lengths = creditCards[creditCardType].length.split(",");
     for (let j=0; j<lengths.length; j++) {
-        if (cardNo.length == lengths[j]) LengthValid = true;
+        if (cardNo.length === parseInt(lengths[j])) LengthValid = true;
     }
 
     // See if all is OK by seeing if the length was valid. We only check the length if all else was
