@@ -1,3 +1,7 @@
 .busStopListRowIcons {
     cursor: pointer;
 }
+
+.bus-stop-icon-tooltip {
+    z-index: 2;
+}
