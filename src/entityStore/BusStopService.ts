@@ -1,4 +1,4 @@
-export interface Bus {
+export interface BusStop {
     stopId: number;
     lat: number;
     lng: number;
@@ -54,7 +54,7 @@ function clone(obj: cloneTypes): cloneTypes {
 
 class BusStopService {
 
-    private stops: Bus[] = [
+    private stops: BusStop[] = [
         { stopId: 1, lat: 33.760262, lng: -84.384706, donationsRaisedInDollars: 0, name: 'Hertz at Portman Blvd' },
         { stopId: 1, lat: 33.760138, lng: -84.388043, donationsRaisedInDollars: 0, name: 'Peachtree Center Mall' },
         { stopId: 1, lat: 33.757355, lng: -84.386423, donationsRaisedInDollars: 0, name: 'Georgia Pacific' },
@@ -71,11 +71,11 @@ class BusStopService {
      * returns an array of all stops on success
      * on failure, throws Error
      */
-    public getAllStops = (): Bus[] => {
+    public getAllStops = (): BusStop[] => {
 
         randomlyFailWith('Unable to read database');
 
-        return clone(this.stops) as Bus[];
+        return clone(this.stops) as BusStop[];
     }
 
     /**
@@ -86,7 +86,7 @@ class BusStopService {
 
         randomlyFailWith('Unable to connect to database');
 
-        let stop: Bus | undefined = this.stops.find(function (s)
+        let stop: BusStop | undefined = this.stops.find(function (s)
         {
             return s.stopId === stopId;
         });
