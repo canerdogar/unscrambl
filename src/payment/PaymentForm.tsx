@@ -3,9 +3,12 @@ import {Button, Col, Form, Row} from "react-bootstrap";
 import {CCValidationEnum, CreditCardType, checkCreditCard} from "./CreditCardValidator";
 import "./PaymentForm.css";
 import {BusStop} from "../entityStore/BusStopService";
+import {faArrowLeft} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 interface PaymentFormProps {
     busStop: BusStop;
+    closePanel: () => void;
 }
 
 interface PaymentFormState {
@@ -73,6 +76,16 @@ export class PaymentForm extends React.Component<PaymentFormProps, PaymentFormSt
     render() {
         return (
             <Col xs={12} md={4} className="payment-form">
+                <div
+                    className="d-flex flex-row justify-content-start w-100 mb-1 align-items-center back-button"
+                    onClick={this.props.closePanel}
+                >
+                    <FontAwesomeIcon
+                        icon={faArrowLeft}
+                        className="mr-1"
+                    />
+                    <span>Go Back</span>
+                </div>
                 <Form>
                     <Form.Group controlId="formBasicFullname">
                         <Form.Label>Name of the donator</Form.Label>
@@ -129,7 +142,7 @@ export class PaymentForm extends React.Component<PaymentFormProps, PaymentFormSt
                         </Form.Row>
                     </Form.Group>
                     <Button variant="primary" type="submit" size="lg" block>
-                        Submit
+                        Pay
                     </Button>
                 </Form>
             </Col>

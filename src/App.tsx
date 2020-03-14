@@ -11,7 +11,7 @@ interface AppProps {
 
 interface AppState {
   openedPanel: PanelType | null;
-  busStop: BusStop | null;
+  busStop: BusStop;
 }
 
 enum PanelType {
@@ -25,7 +25,7 @@ class App extends React.Component<AppProps, AppState> {
     super(props);
     this.state = {
         openedPanel: null,
-        busStop: null,
+        busStop: {} as BusStop,
     };
   }
 
@@ -43,6 +43,13 @@ class App extends React.Component<AppProps, AppState> {
       })
   }
 
+  private closePanel = () => {
+      this.setState({
+          openedPanel: null,
+          busStop: {} as BusStop,
+      })
+  }
+
   render() {
       return (
           <Container fluid className="d-flex h-100 flex-column">
@@ -55,11 +62,13 @@ class App extends React.Component<AppProps, AppState> {
                   {this.state.openedPanel === PanelType.PAYMENT &&
                     <PaymentForm
                         busStop={this.state.busStop}
+                        closePanel={this.closePanel}
                     />
                   }
                   {this.state.openedPanel === PanelType.MAP &&
                   <Map
                     busStop={this.state.busStop}
+                    closePanel={this.closePanel}
                   />
                   }
               </Row>

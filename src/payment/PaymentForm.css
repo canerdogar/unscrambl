@@ -3,3 +3,7 @@
     position: absolute !important;
     z-index: 2;
 }
+
+.payment-form .back-button {
+    cursor: pointer;
+}
