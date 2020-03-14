@@ -56,15 +56,19 @@ class BusStopService {
 
     private stops: BusStop[] = [
         { stopId: 1, lat: 33.760262, lng: -84.384706, donationsRaisedInDollars: 0, name: 'Hertz at Portman Blvd' },
-        { stopId: 1, lat: 33.760138, lng: -84.388043, donationsRaisedInDollars: 0, name: 'Peachtree Center Mall' },
-        { stopId: 1, lat: 33.757355, lng: -84.386423, donationsRaisedInDollars: 0, name: 'Georgia Pacific' },
-        { stopId: 1, lat: 33.758648, lng: -84.382754, donationsRaisedInDollars: 0, name: 'Sheraton Atlanta' },
-        { stopId: 1, lat: 33.755365, lng: -84.384921, donationsRaisedInDollars: 0, name: 'Loudermilk Center' },
-        { stopId: 1, lat: 33.756887, lng: -84.389417, donationsRaisedInDollars: 0, name: 'Rialto Arts Center' },
-        { stopId: 1, lat: 33.759215, lng: -84.391719, donationsRaisedInDollars: 0, name: 'Sky View Atlanta' },
-        { stopId: 1, lat: 33.762046, lng: -84.391708, donationsRaisedInDollars: 0, name: 'Centennial Park' },
-        { stopId: 1, lat: 33.763004, lng: -84.387041, donationsRaisedInDollars: 0, name: 'Suntrust Plaza' },
-        { stopId: 1, lat: 33.754661, lng: -84.380101, donationsRaisedInDollars: 0, name: 'Sweet Auburn Market' }
+        { stopId: 2, lat: 33.760138, lng: -84.388043, donationsRaisedInDollars: 0, name: 'Peachtree Center Mall' },
+        { stopId: 3, lat: 33.757355, lng: -84.386423, donationsRaisedInDollars: 0, name: 'Georgia Pacific' },
+        { stopId: 4, lat: 33.758648, lng: -84.382754, donationsRaisedInDollars: 0, name: 'Sheraton Atlanta' },
+        { stopId: 5, lat: 33.755365, lng: -84.384921, donationsRaisedInDollars: 0, name: 'Loudermilk Center' },
+        { stopId: 6, lat: 33.756887, lng: -84.389417, donationsRaisedInDollars: 100, name: 'Rialto Arts Center' },
+        { stopId: 7, lat: 33.759215, lng: -84.391719, donationsRaisedInDollars: 800, name: 'Sky View Atlanta' },
+        { stopId: 8, lat: 33.762046, lng: -84.391708, donationsRaisedInDollars: 50, name: 'Centennial Park' },
+        { stopId: 9, lat: 33.763004, lng: -84.387041, donationsRaisedInDollars: 0, name: 'Suntrust Plaza' },
+        { stopId: 10, lat: 33.754661, lng: -84.390101, donationsRaisedInDollars: 0, name: 'Sweet Auburn Market' },
+        { stopId: 11, lat: 33.754661, lng: -84.380201, donationsRaisedInDollars: 0, name: 'Kizilay' },
+        { stopId: 12, lat: 33.754661, lng: -84.380301, donationsRaisedInDollars: 0, name: 'Necatibey' },
+        { stopId: 13, lat: 33.754661, lng: -84.380401, donationsRaisedInDollars: 0, name: 'Milli Kutuphane' },
+        { stopId: 14, lat: 33.754661, lng: -84.380501, donationsRaisedInDollars: 0, name: 'Sogutozu' },
     ];
 
     /**

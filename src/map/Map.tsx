@@ -38,7 +38,7 @@ export class Map extends React.Component<MapProps, MapState> {
         return (
             <Col xs={12} md={8} className="map-container d-flex flex-column align-items-center h-100 w-100">
                 <div
-                    className="d-flex flex-row justify-content-start w-100 pt-3 align-items-center back-button"
+                    className="d-inline-flex flex-row justify-content-start w-100 pt-3 align-items-center back-button"
                     onClick={this.props.closePanel}
                 >
                     <FontAwesomeIcon

@@ -66,73 +66,74 @@ export class PaymentForm extends React.Component<PaymentFormProps, PaymentFormSt
         const year: number = new Date().getFullYear() % 2000;
         return (
             <Col xs={12} md={4} className="payment-form">
-                <div
-                    className="d-flex flex-row justify-content-start w-100 mb-1 align-items-center back-button"
-                    onClick={this.props.closePanel}
-                >
-                    <FontAwesomeIcon
-                        icon={faArrowLeft}
-                        className="mr-1"
-                    />
-                    <span>Go Back</span>
-                </div>
-                <Form>
-                    <Form.Group controlId="formBasicFullname">
-                        <Form.Label>Name of the donator</Form.Label>
-                        <Form.Control type="text" placeholder="Enter your full name" />
-                    </Form.Group>
-                    <Form.Group controlId="formBasicCardNumber">
-                        <Form.Label>Credit Card Number</Form.Label>
-                        <Form.Control
-                            type="text"
-                            placeholder={this.mask}
-                            defaultValue={this.mask}
-                            pattern="\b\d{4} \d{4} \d{4} \d{4}\b"
-                            onChange={this.creditCardListener}
+                <div className="border rounded p-2">
+                    <div className="d-inline-flex flex-row justify-content-start w-100 mb-1 align-items-center back-button"
+                         onClick={this.props.closePanel}>
+                        <FontAwesomeIcon
+                            icon={faArrowLeft}
+                            className="mr-1"
                         />
-                    </Form.Group>
-                    <Form.Group>
-                        <Form.Row>
-                            <Col xs={8} lg={8}>
-                                <Form.Label>Expiry Date</Form.Label>
-                                <Row>
-                                    <Col xs={6} lg={6}>
-                                        <Form.Control as="select">
-                                            {_.range(1,13).map((option: number) =>
-                                                <option>{option}</option>
-                                            )}
-                                        </Form.Control>
-                                    </Col>
-                                    <Col xs={6} lg={6}>
-                                        <Form.Control as="select">
-                                            {_.range(year,year + 11).map((option: number) =>
-                                                <option>{option}</option>
-                                            )}
-                                        </Form.Control>
-                                    </Col>
-                                </Row>
-                            </Col>
-                            <Col xs={4} lg={4}>
-                                <Form.Label>CV Code</Form.Label>
-                                <Form.Control
-                                    type="number"
-                                    placeholder="CV Code"
-                                    minLength={3}
-                                    maxLength={3}
-                                    min={20}
-                                    max={99}
-                                />
-                            </Col>
-                        </Form.Row>
-                    </Form.Group>
-                    <Form.Group controlId="formBasicFullname">
-                        <Form.Label>Email address</Form.Label>
-                        <Form.Control type="email" placeholder="Enter your email (Optional)" />
-                    </Form.Group>
-                    <Button variant="primary" type="submit" size="lg" block>
-                        Pay
-                    </Button>
-                </Form>
+                        <span>Go Back</span>
+                    </div>
+                    <Form>
+                        <Form.Group controlId="formBasicFullname">
+                            <Form.Label>Name of the donator</Form.Label>
+                            <Form.Control type="text" placeholder="Enter your full name" required/>
+                        </Form.Group>
+                        <Form.Group controlId="formBasicCardNumber">
+                            <Form.Label>Credit Card Number</Form.Label>
+                            <Form.Control
+                                type="text"
+                                placeholder={this.mask}
+                                defaultValue={this.mask}
+                                pattern="\b\d{4} \d{4} \d{4} \d{4}\b"
+                                onChange={this.creditCardListener}
+                            />
+                        </Form.Group>
+                        <Form.Group>
+                            <Form.Row>
+                                <Col xs={8} lg={8}>
+                                    <Form.Label>Expiry Date</Form.Label>
+                                    <Row>
+                                        <Col xs={6} lg={6}>
+                                            <Form.Control as="select">
+                                                {_.range(1,13).map((option: number) =>
+                                                    <option>{option}</option>
+                                                )}
+                                            </Form.Control>
+                                        </Col>
+                                        <Col xs={6} lg={6}>
+                                            <Form.Control as="select">
+                                                {_.range(year,year + 11).map((option: number) =>
+                                                    <option>{option}</option>
+                                                )}
+                                            </Form.Control>
+                                        </Col>
+                                    </Row>
+                                </Col>
+                                <Col xs={4} lg={4}>
+                                    <Form.Label>CV Code</Form.Label>
+                                    <Form.Control
+                                        type="number"
+                                        placeholder="CV Code"
+                                        minLength={3}
+                                        maxLength={3}
+                                        min={0}
+                                        max={999}
+                                        required
+                                    />
+                                </Col>
+                            </Form.Row>
+                        </Form.Group>
+                        <Form.Group controlId="formBasicFullname">
+                            <Form.Label>Email address</Form.Label>
+                            <Form.Control type="email" placeholder="Enter your email (Optional)" />
+                        </Form.Group>
+                        <Button variant="primary" type="submit" size="lg" block>
+                            Pay
+                        </Button>
+                    </Form>
+                </div>
             </Col>
         );
     }

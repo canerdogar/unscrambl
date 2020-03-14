@@ -10,9 +10,11 @@
 .bus-stop-list .panel {
     border: 1px solid #ddd;
     background-color: #fcfcfc;
+    height: 100vh;
+    overflow: scroll;
 }
 
-.bus-stop-list .table-filter {
+.bus-stop-list .table-container {
     background-color: #fff;
     border-bottom: 1px solid #eee;
 }
