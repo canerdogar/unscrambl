@@ -111,7 +111,7 @@ export class BusStopList extends React.Component<BusStopListProps, BusStopListSt
                     />
                     :
                     <div>
-                        <div className="d-flex justify-content-between w-100">
+                        <div className="d-flex justify-content-between w-100 m-1">
                             <InputGroup className="w-50">
                                 <InputGroup.Prepend>
                                     <InputGroup.Text><FontAwesomeIcon icon={faSearch}/></InputGroup.Text>
@@ -122,7 +122,7 @@ export class BusStopList extends React.Component<BusStopListProps, BusStopListSt
                                     onChange={this.onSearchKeyChange}
                                 />
                             </InputGroup>
-                            <Button
+                            <Button className="mr-1"
                                 variant={this.state.ascending ? "outline-secondary" : "outline-info"}
                                 onClick={this.sort}
                             >

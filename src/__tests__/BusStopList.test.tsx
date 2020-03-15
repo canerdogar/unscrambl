@@ -20,10 +20,12 @@ describe("Check filter and sort", () => {
         let dom = mount(<BusStopList onDonationClick={() => null} onMapClick={() => null} transparent={false}/>);
         expect(dom.find("tr")).toHaveLength(3);
 
+        // filter with peach
         dom.find("input").simulate('change', { target: { value: 'Peach' } });
         expect(dom.find("tr")).toHaveLength(2);
         expect(dom.find("tr").first().find(".badge").text()).toBe("100");
 
+        // sort
         dom.find("button").simulate('click');
         expect(dom.find("tr").first().find(".badge").text()).toBe("200");
     })

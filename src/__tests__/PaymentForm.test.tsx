@@ -19,16 +19,15 @@ let invalidCardNumber = "1111 1111 1111 1111";
 describe("Check input field restrictions", () => {
 
     (busStopService as any).addDonation.mockImplementation((stopId: number, donationAmountInDollars: number) => null);
+    const closePanel = jest.fn(() => null);
+    const closeAndRefresh = jest.fn(() => null);
+    const dom = mount(<PaymentForm
+        busStop={paymentBusStop}
+        closePanel={closePanel}
+        closeAndRefresh={closeAndRefresh}
+    />);
 
     test("Name not given", () => {
-        const closePanel = jest.fn(() => null);
-        const closeAndRefresh = jest.fn(() => null);
-        const dom = mount(<PaymentForm
-            busStop={paymentBusStop}
-            closePanel={closePanel}
-            closeAndRefresh={closeAndRefresh}
-        />);
-
         dom.find("#formBasicAmount").simulate('change', { target: { value: 100 } });
         let cardInput = dom.find("#formBasicCardNumber");
         (cardInput.getDOMNode() as HTMLInputElement).value = validCardNumber;
@@ -37,23 +36,12 @@ describe("Check input field restrictions", () => {
         dom.find("button").simulate('click');
 
         expect(busStopService.addDonation).not.toHaveBeenCalled();
-
     })
 
     test("Amount not given", () => {
-        const closePanel = jest.fn(() => null);
-        const closeAndRefresh = jest.fn(() => null);
-        const dom = mount(<PaymentForm
-            busStop={paymentBusStop}
-            closePanel={closePanel}
-            closeAndRefresh={closeAndRefresh}
-        />);
 
         dom.find("#formBasicFullname").simulate('change', {target: {value: "cerdogar"}});
-        let cardInput = dom.find("#formBasicCardNumber");
-        (cardInput.getDOMNode() as HTMLInputElement).value = validCardNumber;
-        cardInput.simulate("change");
-        dom.find("#formBasicCV").simulate('change', { target: { value: 123 } });
+        dom.find("#formBasicAmount").simulate('change', { target: { value: "" } });
         dom.find("button").simulate('click');
 
         expect(busStopService.addDonation).not.toHaveBeenCalled();
@@ -61,19 +49,8 @@ describe("Check input field restrictions", () => {
     })
 
     test("CV given not in the range", () => {
-        const closePanel = jest.fn(() => null);
-        const closeAndRefresh = jest.fn(() => null);
-        const dom = mount(<PaymentForm
-            busStop={paymentBusStop}
-            closePanel={closePanel}
-            closeAndRefresh={closeAndRefresh}
-        />);
 
-        dom.find("#formBasicFullname").simulate('change', {target: {value: "cerdogar"}});
         dom.find("#formBasicAmount").simulate('change', { target: { value: 100 } });
-        let cardInput = dom.find("#formBasicCardNumber");
-        (cardInput.getDOMNode() as HTMLInputElement).value = validCardNumber;
-        cardInput.simulate("change");
         dom.find("#formBasicCV").simulate('change', { target: { value: 4444 } });
         dom.find("button").simulate('click');
 
@@ -82,16 +59,7 @@ describe("Check input field restrictions", () => {
     })
 
     test("Card is not valid", () => {
-        const closePanel = jest.fn(() => null);
-        const closeAndRefresh = jest.fn(() => null);
-        const dom = mount(<PaymentForm
-            busStop={paymentBusStop}
-            closePanel={closePanel}
-            closeAndRefresh={closeAndRefresh}
-        />);
 
-        dom.find("#formBasicFullname").simulate('change', {target: {value: "cerdogar"}});
-        dom.find("#formBasicAmount").simulate('change', { target: { value: 100 } });
         let cardInput = dom.find("#formBasicCardNumber");
         (cardInput.getDOMNode() as HTMLInputElement).value = invalidCardNumber;
         cardInput.simulate("change");
