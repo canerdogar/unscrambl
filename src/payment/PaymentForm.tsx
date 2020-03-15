@@ -149,41 +149,46 @@ export class PaymentForm extends React.Component<PaymentFormProps, PaymentFormSt
                                 onChange={this.creditCardListener}
                             />
                         </Form.Group>
-                        <Form.Group>
+
                             <Form.Row>
                                 <Col xs={8} lg={8}>
                                     <Form.Label>Expiry Date</Form.Label>
                                     <Row>
                                         <Col xs={6} lg={6}>
-                                            <Form.Control as="select">
-                                                {_.range(1,13).map((option: number) =>
-                                                    <option key={option}>{option}</option>
-                                                )}
-                                            </Form.Control>
+                                            <Form.Group controlId="formBasicMonth">
+                                                <Form.Control as="select">
+                                                    {_.range(1,13).map((option: number) =>
+                                                        <option key={option}>{option}</option>
+                                                    )}
+                                                </Form.Control>
+                                            </Form.Group>
                                         </Col>
                                         <Col xs={6} lg={6}>
-                                            <Form.Control as="select">
-                                                {_.range(year,year + 11).map((option: number) =>
-                                                    <option key={option}>{option}</option>
-                                                )}
-                                            </Form.Control>
+                                            <Form.Group controlId="formBasicYear">
+                                                <Form.Control as="select">
+                                                    {_.range(year,year + 11).map((option: number) =>
+                                                        <option key={option}>{option}</option>
+                                                    )}
+                                                </Form.Control>
+                                            </Form.Group>
                                         </Col>
                                     </Row>
                                 </Col>
                                 <Col xs={4} lg={4}>
-                                    <Form.Label>CV Code</Form.Label>
-                                    <Form.Control
-                                        type="number"
-                                        placeholder="CV Code"
-                                        minLength={3}
-                                        maxLength={3}
-                                        min={0}
-                                        max={999}
-                                        required
-                                    />
+                                    <Form.Group controlId="formBasicCV">
+                                        <Form.Label>CV Code</Form.Label>
+                                        <Form.Control
+                                            type="number"
+                                            placeholder="CV Code"
+                                            minLength={3}
+                                            maxLength={3}
+                                            min={0}
+                                            max={999}
+                                            required
+                                        />
+                                    </Form.Group>
                                 </Col>
                             </Form.Row>
-                        </Form.Group>
                         <div className="d-flex flex-row justify-content-end">
                             <div className="credit-card mastercard mr-2"/>
                             <div className="credit-card visa"/>
