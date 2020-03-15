@@ -34,17 +34,26 @@ export class PaymentForm extends React.Component<PaymentFormProps, PaymentFormSt
         };
     }
 
-    // Strip everything which are not numbers
+    /**
+     * Strip everything which are not numbers
+     * @param {string} maskedData
+     * @returns {string[]}
+     */
     private strip = (maskedData: string): string[] => {
         function isDigit(char: string) {
             return /\d/.test(char);
         }
+
         return maskedData.split('').filter(isDigit);
     }
 
-    // Replace `_` characters with characters from `data`
+    /**
+     * Replace `_` characters with characters from `data`
+     * @param {string[]} data
+     * @returns {string}
+     */
     private applyMask = (data: string[]): string => {
-        return this.mask.split('').map(function(char) {
+        return this.mask.split('').map(function (char) {
             if (char !== '_') return char;
             if (data.length === 0) return char;
             return data.shift();
@@ -55,6 +64,10 @@ export class PaymentForm extends React.Component<PaymentFormProps, PaymentFormSt
         return this.applyMask(this.strip(data));
     }
 
+    /**
+     * In each change mask the input and set the cursor
+     * @param event
+     */
     private creditCardListener = (event: any): void => {
         let field: HTMLInputElement = event.target as HTMLInputElement;
 
@@ -67,9 +80,14 @@ export class PaymentForm extends React.Component<PaymentFormProps, PaymentFormSt
 
         field.value = maskedInput;
         this.oldCardNumberValue = maskedInput;
-        field.setSelectionRange(i+1, i+1);
+        field.setSelectionRange(i + 1, i + 1);
     }
 
+    /**
+     * Checks credit card validity, if it's not valid or service throws an error displays information model with error
+     * otherwise directs to list page
+     * @param {React.FormEvent<HTMLFormElement>} event
+     */
     private onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         const form: HTMLFormElement = event.currentTarget;
         event.preventDefault();
@@ -88,6 +106,7 @@ export class PaymentForm extends React.Component<PaymentFormProps, PaymentFormSt
                     show: true,
                     errorMessage: null,
                 }, () => {
+                    // to simulate time spent on the network
                     setTimeout(() => this.setState({
                         show: false,
                     }, () => this.props.closeAndRefresh()), 3000);
@@ -118,8 +137,9 @@ export class PaymentForm extends React.Component<PaymentFormProps, PaymentFormSt
         return (
             <Col xs={12} md={4} className="payment-form">
                 <div className="border rounded p-2">
-                    <div className="d-inline-flex flex-row justify-content-start w-100 mb-1 align-items-center back-button"
-                         onClick={this.props.closePanel}>
+                    <div
+                        className="d-inline-flex flex-row justify-content-start w-100 mb-1 align-items-center back-button"
+                        onClick={this.props.closePanel}>
                         <FontAwesomeIcon
                             icon={faArrowLeft}
                             className="mr-1"
@@ -150,52 +170,52 @@ export class PaymentForm extends React.Component<PaymentFormProps, PaymentFormSt
                             />
                         </Form.Group>
 
-                            <Form.Row>
-                                <Col xs={8} lg={8}>
-                                    <Form.Label>Expiry Date</Form.Label>
-                                    <Row>
-                                        <Col xs={6} lg={6}>
-                                            <Form.Group controlId="formBasicMonth">
-                                                <Form.Control as="select">
-                                                    {_.range(1,13).map((option: number) =>
-                                                        <option key={option}>{option}</option>
-                                                    )}
-                                                </Form.Control>
-                                            </Form.Group>
-                                        </Col>
-                                        <Col xs={6} lg={6}>
-                                            <Form.Group controlId="formBasicYear">
-                                                <Form.Control as="select">
-                                                    {_.range(year,year + 11).map((option: number) =>
-                                                        <option key={option}>{option}</option>
-                                                    )}
-                                                </Form.Control>
-                                            </Form.Group>
-                                        </Col>
-                                    </Row>
-                                </Col>
-                                <Col xs={4} lg={4}>
-                                    <Form.Group controlId="formBasicCV">
-                                        <Form.Label>CV Code</Form.Label>
-                                        <Form.Control
-                                            type="number"
-                                            placeholder="CV Code"
-                                            minLength={3}
-                                            maxLength={3}
-                                            min={0}
-                                            max={999}
-                                            required
-                                        />
-                                    </Form.Group>
-                                </Col>
-                            </Form.Row>
+                        <Form.Row>
+                            <Col xs={8} lg={8}>
+                                <Form.Label>Expiry Date</Form.Label>
+                                <Row>
+                                    <Col xs={6} lg={6}>
+                                        <Form.Group controlId="formBasicMonth">
+                                            <Form.Control as="select">
+                                                {_.range(1, 13).map((option: number) =>
+                                                    <option key={option}>{option}</option>
+                                                )}
+                                            </Form.Control>
+                                        </Form.Group>
+                                    </Col>
+                                    <Col xs={6} lg={6}>
+                                        <Form.Group controlId="formBasicYear">
+                                            <Form.Control as="select">
+                                                {_.range(year, year + 11).map((option: number) =>
+                                                    <option key={option}>{option}</option>
+                                                )}
+                                            </Form.Control>
+                                        </Form.Group>
+                                    </Col>
+                                </Row>
+                            </Col>
+                            <Col xs={4} lg={4}>
+                                <Form.Group controlId="formBasicCV">
+                                    <Form.Label>CV Code</Form.Label>
+                                    <Form.Control
+                                        type="number"
+                                        placeholder="CV Code"
+                                        minLength={3}
+                                        maxLength={3}
+                                        min={0}
+                                        max={999}
+                                        required
+                                    />
+                                </Form.Group>
+                            </Col>
+                        </Form.Row>
                         <div className="d-flex flex-row justify-content-end">
                             <div className="credit-card mastercard mr-2"/>
                             <div className="credit-card visa"/>
                         </div>
                         <Form.Group controlId="formBasicEmail">
                             <Form.Label>Email address</Form.Label>
-                            <Form.Control type="email" placeholder="Enter your email (Optional)" />
+                            <Form.Control type="email" placeholder="Enter your email (Optional)"/>
                         </Form.Group>
                         <Button variant="primary" type="submit" size="lg" block>
                             Pay

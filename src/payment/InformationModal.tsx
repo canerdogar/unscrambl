@@ -11,6 +11,9 @@ interface InformationModalState {
 
 }
 
+/**
+ * If success passed, it renders alert suceess otherwise renders alert-error with message given
+ */
 export class InformationModal extends React.Component<InformationModalProps, InformationModalState> {
 
     constructor(props: InformationModalProps) {

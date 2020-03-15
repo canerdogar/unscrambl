@@ -1,6 +1,6 @@
 import * as React from "react";
 import {BusStop} from "../entityStore/BusStopService";
-import {Badge, Overlay, OverlayTrigger, Tooltip} from "react-bootstrap";
+import {Badge} from "react-bootstrap";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faDonate, faLocationArrow } from '@fortawesome/free-solid-svg-icons';
 import "./BusStopListRow.css";
@@ -19,10 +19,6 @@ export class BusStopListRow extends React.Component<BusStopListRowProps, BusStop
 
     constructor(props: BusStopListRowProps) {
         super(props);
-    }
-
-    private clicked = () => {
-        console.warn("clicked");
     }
 
     render() {

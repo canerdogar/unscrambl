@@ -32,6 +32,9 @@ export class BusStopList extends React.Component<BusStopListProps, BusStopListSt
         };
     }
 
+    /**
+     * gets stop lists and renders the component with it
+     */
     public refresh = () => {
         try {
             const busStops: BusStop[] = busStopService.getAllStops();
@@ -50,21 +53,39 @@ export class BusStopList extends React.Component<BusStopListProps, BusStopListSt
         this.refresh();
     }
 
+    /**
+     * callback to filter bus stop list with search key
+     * @param {BusStop} busStop
+     * @returns {any}
+     */
     private filterCallback = (busStop: BusStop) =>
         busStop.name.toLowerCase().includes(this.state.searchKey.toLowerCase());
 
+    /**
+     * callback to sort bus stop list according to ascending state
+     * @param {BusStop} busStop1
+     * @param {BusStop} busStop2
+     * @returns {number}
+     */
     private sortCallback = (busStop1: BusStop, busStop2: BusStop) => {
         return this.state.ascending ? (busStop1.donationsRaisedInDollars - busStop2.donationsRaisedInDollars) :
             (busStop2.donationsRaisedInDollars - busStop1.donationsRaisedInDollars);
 
     }
 
+    /**
+     * sets search key
+     * @param event
+     */
     private onSearchKeyChange = (event: any) => {
         this.setState({
             searchKey: event.target.value,
         })
     }
 
+    /**
+     * sets ascending
+     */
     private sort = () => {
         this.setState({
             ascending: !this.state.ascending,
